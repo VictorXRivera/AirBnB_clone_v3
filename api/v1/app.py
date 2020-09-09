@@ -17,6 +17,15 @@ def app_teardown(error):
     """
     storage.close()
 
+
+@app.errorhandler(404)
+def error_404(message):
+    """
+    404 error message
+    """
+    return jsonify({"error": "Not found"}), 404
+
+
 if __name__ == '__main__':
     """
     Setting host and port
