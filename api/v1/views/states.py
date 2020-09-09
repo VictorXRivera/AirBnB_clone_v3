@@ -23,10 +23,10 @@ def get_state(state_id):
     Getting state objects
     """
     stored_states = storage.all("State").values()
-    states_object = [obj.to_dict() for obj in stored_states if obj.id == state_id]
-    if states_object == []:
+    states_obj = [obj.to_dict() for obj in stored_states if obj.id == state_id]
+    if states_obj == []:
         abort(404)
-    return jsonify(states_object[0])
+    return jsonify(states_obj[0])
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
@@ -35,10 +35,10 @@ def delete_state(state_id):
     Deleting state object
     """
     stored_states = storage.all("State").values()
-    states_object = [obj.to_dict() for obj in stored_states if obj.id == state_id]
-    if states_object == []:
+    states_obj = [obj.to_dict() for obj in stored_states if obj.id == state_id]
+    if states_obj == []:
         abort(404)
-    states_object.remove(states_object[0])
+    states_obj.remove(states_obj[0])
     for obj in stored_states:
         if obj.id == state_id:
             storage.delete(obj)
@@ -69,14 +69,14 @@ def update_states(state_id):
     Updates State object
     """
     stored_states = storage.all("State").values()
-    states_object = [obj.to_dict() for obj in stored_states if obj.id == state_id]
-    if states_object == []:
+    states_obj = [obj.to_dict() for obj in stored_states if obj.id == state_id]
+    if states_obj == []:
         abort(404)
     if not request.get_json():
         abort(400, 'Not a JSON')
-    states_object[0]['name'] = request.json['name']
+    states_obj[0]['name'] = request.json['name']
     for obj in stored_states:
         if obj.id == state_id:
             obj.name = request.json['name']
     storage.save()
-    return jsonify(states_objects[0]), 200
+    return jsonify(states_obj[0]), 200
