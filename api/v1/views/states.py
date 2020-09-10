@@ -10,18 +10,14 @@ import uuid
 
 @app_views.route('/status/', methods=['GET'])
 def list_of_states():
-    """
-    Retrieving a list of all state objects
-    """
+    """Retrieving a list of all state objects"""
     list_of_states = [obj.to_dict() for obj in storage.all("State").values()]
     return jsonify(list_of_states)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
-    """
-    Getting state objects
-    """
+    """Getting state objects"""
     stored_states = storage.all("State").values()
     states_obj = [obj.to_dict() for obj in stored_states if obj.id == state_id]
     if states_obj == []:
@@ -31,9 +27,7 @@ def get_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
-    """
-    Deleting state object
-    """
+    """Deleting state object"""
     stored_states = storage.all("State").values()
     states_obj = [obj.to_dict() for obj in stored_states if obj.id == state_id]
     if states_obj == []:
@@ -48,9 +42,7 @@ def delete_state(state_id):
 
 @app_views.route('/states/', methods=['POST'])
 def create_state():
-    """
-    Creating a State object
-    """
+    """Creating a State object"""
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
@@ -65,9 +57,7 @@ def create_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_states(state_id):
-    """
-    Updates State object
-    """
+    """Updates State object"""
     stored_states = storage.all("State").values()
     states_obj = [obj.to_dict() for obj in stored_states if obj.id == state_id]
     if states_obj == []:
