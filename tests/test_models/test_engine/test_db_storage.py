@@ -107,5 +107,11 @@ class TestFileStorage(unittest.TestCase):
         usr = User("john@doe.com", password="password")
         models.storage.new(usr)
         models.storage.save()
-        uid = usr.id
-        
+        self.assertTrue(models.storage.get(usr, usr.id) is usr)
+        self.assertIsNone(models.storage.get(usr, 500))
+        models.storage.delete(usr)
+        stt = State(name="Franklin")
+        models.storage.new(stt)
+        models.storage.save()
+        self.assertTrue(models.storage.get(stt, stt.id) is stt)
+        self.assertIsNone(models.storage.get(stt, "Magnolia"))
