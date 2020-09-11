@@ -45,7 +45,7 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     """Getting a City object"""
-    stored_cities = storage.all("City").values()
+    stored_cities = storage.all(City).values()
     city_obj = [obj.to_dict() for obj in stored_cities if obj.id == city_id]
     if city_obj == []:
         abort(404)

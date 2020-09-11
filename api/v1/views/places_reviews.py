@@ -15,7 +15,7 @@ def place_review_func(place_id):
     """ Handles place-specific review methodes """
     places = storage.all(Place)
     reviews = storage.all(Review)
-    key = "Place." place_id
+    key = "Place." + place_id
 
     # GET method
     if request.method == "GET":
@@ -94,8 +94,8 @@ def review_id_func(review_id):
 
         new = request.get_json()
         for rkey, value in new.items():
-            if rkey is not in ["id", "user_id", "place_id",
-                               "created_at", "updated_at"]:
+            if rkey not in ["id", "user_id", "place_id",
+                            "created_at", "updated_at"]:
                 setattr(review, rkey, value)
             storage.save()
         return review.to_dict(), 200
