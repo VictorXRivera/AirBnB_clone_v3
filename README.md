@@ -162,6 +162,5 @@ Tim Sninsky - [Github](https://github.com/modernfuthark)
 
 Second part of Airbnb: Joann Vuong
 
-## RestFul API Authors
 ## License
 Public Domain. No copy write protection. 
