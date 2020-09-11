@@ -30,8 +30,8 @@ def create_city(state_id):
         abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
         abort(400, 'Missing name')
-    stored_states = storage.all("State").values()
-    state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
+    states = storage.all("State").values()
+    state_obj = [obj.to_dict() for obj in states if obj.id == state_id]
     if state_obj == []:
         abort(404)
     cities = []
@@ -45,11 +45,14 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     """Getting a City object"""
-    stored_cities = storage.all(City).values()
-    city_obj = [obj.to_dict() for obj in stored_cities if obj.id == city_id]
-    if city_obj == []:
+    cities = storage.all(City)
+    if not city_id:
+        return jsonify([obj.to_dict() for obj in cities.values()])
+    try:
+        key = "City." + city_id
+        return jsonify(cities[key].to_dict())
+    except KeyError:
         abort(404)
-    return jsonify(city_obj[0])
 
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
